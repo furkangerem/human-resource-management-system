@@ -9,7 +9,9 @@ import com.mfg.hrms.core.utils.results.ErrorResult;
 import com.mfg.hrms.core.utils.results.Result;
 import com.mfg.hrms.core.utils.results.SuccessResult;
 import com.mfg.hrms.entities.concretes.Candidate;
+import com.mfg.hrms.entities.concretes.City;
 import com.mfg.hrms.entities.concretes.Employer;
+import com.mfg.hrms.entities.concretes.JobAdvertisement;
 
 @Service
 public class ValidationRuleManager implements IValidationRuleService {
@@ -42,4 +44,22 @@ public class ValidationRuleManager implements IValidationRuleService {
 		return new SuccessResult("Validation OK.");
 	}
 
+	@Override
+	public Result checkCity(City city) {
+
+		if (city.getName().isEmpty())
+			return new ErrorResult("The city name can not be empty.");
+		return new SuccessResult("Validation OK.");
+	}
+
+	@Override
+	public Result checkJobAdvertisement(JobAdvertisement jobAdvertisement) {
+
+		if (jobAdvertisement.getDescription().isEmpty())
+			return new ErrorResult("Please fill the blanks completely.");
+		if (jobAdvertisement.getFreePositionAmount() <= 0)
+			return new ErrorResult("Free position amount can't be zero or less.");
+
+		return new SuccessResult("Validation OK.");
+	}
 }
